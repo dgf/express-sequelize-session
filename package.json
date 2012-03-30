@@ -11,10 +11,9 @@
       "type": "MIT"
     , "url": "http://github.com/dgf/c3store/raw/master/LICENSE"
   }]
-
   , "repository": {
       "type": "git"
-    , "url": "git@github.com:dgf/c3store.git"
+    , "url": "git://github.com/dgf/c3store.git"
   }
 
   , "dependencies": {
