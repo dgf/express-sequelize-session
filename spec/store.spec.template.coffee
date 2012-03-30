@@ -22,7 +22,7 @@ module.exports = (createStore) ->
 
     aCheck 'get unknown session', (done) ->
       store.get 'sid3', (error, session) ->
-        expect(error).toBeDefined 'an error'
+        expect(error).toBeUndefined 'no error'
         expect(session).toBeUndefined 'no session'
         done()
 

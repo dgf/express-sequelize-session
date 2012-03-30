@@ -10,7 +10,8 @@ class InMemorySessionStore
 
   constructor: (options) ->
     @sessions = []
-    @getBySid = (sid) -> @sessions[parseInt sid.match(SID_PATTERN)[1]]
+    @getSidPosition = (sid) -> parseInt sid.match(SID_PATTERN)[1]
+    @getBySid = (sid) => @sessions[@getSidPosition sid]
 
   clear: (callback) ->
     if @sessions?
@@ -21,9 +22,9 @@ class InMemorySessionStore
 
   destroy: (sid, callback) ->
     ifSidMatches sid, callback, =>
-      session = @getBySid(sid)
+      session = @getBySid sid
       if session?
-        delete session
+        delete @sessions[@getSidPosition sid]
         callback?()
       else
         callback? 'session not found'
@@ -33,11 +34,11 @@ class InMemorySessionStore
 
   get: (sid, callback) ->
     ifSidMatches sid, callback, =>
-      session = @getBySid(sid)
+      session = @getBySid sid
       if session?
         callback null, session # return data
       else
-        callback 'nothing found'
+        callback()
 
   set: (sid, session, callback) ->
     ifSidMatches sid, callback, =>

@@ -40,7 +40,7 @@ class C3Store
       if session
         callback? null, JSON.parse session.data
       else
-        callback? 'session not found'
+        callback?()
     error = (error) -> callback? error
 
     q = where: sid: sid
