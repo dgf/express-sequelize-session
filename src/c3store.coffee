@@ -28,7 +28,7 @@ class C3Store
     success = -> callback?()
     error = (error) -> callback? error
     q = where: sid: sid
-    @Session.delete q, success, error
+    @Session.destroy q, success, error
 
   length: (callback) ->
     success = (count) -> callback? count
@@ -53,5 +53,8 @@ class C3Store
     @Session.create s, success, error
 
 module.exports = (connect) ->
+#
   C3Store:: __proto__ = connect.session.Store.prototype
-  (sequelize, model) -> new C3Store sequelize.define 'Session', _.extend(SessionModel, model)
+
+  (sequelize, model) -> new C3Store sequelize.define 'Session',
+    _.extend(SessionModel, model)
