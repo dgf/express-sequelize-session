@@ -21,11 +21,8 @@ build = (callback) -> call 'coffee', ['-c', '-o', 'lib', 'src'], callback
 
 spec = (callback) -> call jasmineBinary, ['spec', '--coffee'], callback
 
-task 'build', 'build coffee', ->
-  build (status) -> log ":)", green if status is 0
+logSuccess = (status) -> log ":)", green if status is 0
 
-task 'spec', 'run specifications', ->
-  build (buildStatus) ->
-    if buildStatus is 0
-      spec (testStatus) ->
-        log ":)", green if testStatus is 0
+task 'build', 'build coffee', -> build logSuccess
+
+task 'spec', 'run specifications', -> spec logSuccess
