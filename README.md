@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/dgf/c3store.png)](http://travis-ci.org/dgf/c3store)
 # connect express Sequelize session store implementation
 
     express = require 'express'
