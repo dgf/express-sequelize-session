@@ -22,7 +22,7 @@ sqlSpec = (db) ->
 
       store
 
-xdescribe 'MySQL', -> sqlSpec new Sequelize 'session', 'root', '', logging: false
+describe 'MySQL', -> sqlSpec new Sequelize 'c3s_test', 'travis', '', logging: false
 describe 'sqlite3', -> sqlSpec new Sequelize 'session', 'sa', 'secret',
   logging: false
   dialect: 'sqlite'
