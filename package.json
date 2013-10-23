@@ -20,7 +20,7 @@
       "coffee-script": "1.6.x"
     , "underscore": "1.5.x"
     , "sequelize": "1.5.x"
-    , "crudl-model": "0.1.*"
+    , "crudl-model": "0.1.x"
   }
   , "devDependencies": {
       "ajsh": "0.1.x"
