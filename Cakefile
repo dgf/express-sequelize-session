@@ -17,7 +17,7 @@ call = (name, options, callback) ->
 
 build = (callback) -> call 'coffee', ['-c', '-o', 'lib', 'src'], callback
 
-spec = (callback) -> call jasmineBinary, ['spec', '--coffee'], callback
+spec = (callback) -> call jasmineBinary, ['spec', '--verbose', '--coffee'], callback
 
 logSuccess = (status) -> log ":)", green if status is 0
 

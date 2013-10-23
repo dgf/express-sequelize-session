@@ -1,10 +1,9 @@
 connect = require('connect')
 Sequelize = require 'sequelize'
 
-aCheck = require './checker'
+{aCheck} = require 'ajsh'
 C3Store = require('../src/c3store') connect
 spec = require './store.spec.template'
-
 
 sqlSpec = (db) ->
   #
@@ -13,12 +12,13 @@ sqlSpec = (db) ->
     spec (sessions) ->
       store = new C3Store db, optional:
         type: Sequelize.STRING
-      sync = (done) -> store.SequelizeSession.sync(force: true).success(done)
-      aCheck 'sync model', sync, 50
+      it 'syncs the model and session data', ->
+        sync = (done) -> store.SequelizeSession.sync(force: true).success done
+        aCheck 'sync model', sync, 50
 
-      for own sid of sessions
-        do (sid) -> aCheck 'save session', (done) ->
-          store.set sid, sessions[sid], done
+        for own sid of sessions
+          do (sid) -> aCheck 'save session', (done) ->
+            store.set sid, sessions[sid], done
 
       store
 

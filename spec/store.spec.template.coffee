@@ -1,6 +1,6 @@
 # connect middleware session store interface specification
 _ = require 'underscore'
-aCheck = require './checker'
+{aCheck} = require 'ajsh'
 
 # attention: stateful test spec, beware of right order
 module.exports = (createStore) ->
