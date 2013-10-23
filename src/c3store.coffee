@@ -47,10 +47,12 @@ class C3Store
     @Session.find q, success, error
 
   set: (sid, session, callback) ->
-    s = sid: sid, data: JSON.stringify session
-    success = (session) -> callback?()
+    success = (data) -> callback?()
     error = (error) -> callback? error
-    @Session.create s, success, error
+
+    s = sid: sid, data: JSON.stringify session
+    q = where: sid: sid
+    @Session.persist q, s, success, error
 
 module.exports = (connect) ->
 #

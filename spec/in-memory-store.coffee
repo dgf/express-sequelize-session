@@ -42,7 +42,11 @@ class InMemorySessionStore
 
   set: (sid, session, callback) ->
     ifSidMatches sid, callback, =>
-      @sessions.push session
+      pos = @getSidPosition sid
+      if @sessions[pos]?
+        @sessions[pos] = session
+      else
+        @sessions.push session
       callback?()
 
 

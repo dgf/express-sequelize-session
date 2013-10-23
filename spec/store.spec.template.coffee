@@ -27,8 +27,22 @@ module.exports = (createStore) ->
         done()
 
   it 'defines set(sid, session, callback)', =>
-    aCheck 'set session without callback', (done) ->
-      store.set 'sid2', { data: key: 'third session' }, done
+    assert = (done) ->
+      store.set 'sid2', { data: key: 'third session' }, (error) ->
+        expect(error).toBeUndefined 'no error'
+        store.get 'sid2', (error, session) ->
+          expect(session.data.key).toBe 'third session'
+          done()
+    aCheck 'set session data', assert, 50
+
+  it 'set(sid, session, callback) can be called twice', =>
+    assert = (done) ->
+      store.set 'sid2', { data: key: 'updated third session' }, (error) ->
+        expect(error).toBeUndefined 'no error'
+        store.get 'sid2', (error, session) ->
+          expect(session.data.key).toBe 'updated third session'
+          done()
+    aCheck 'set session data again', assert, 50
 
   it 'defines length(callback)', ->
     aCheck 'get session count', (done) ->
