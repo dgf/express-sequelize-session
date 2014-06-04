@@ -55,5 +55,4 @@ module.exports = (Store) ->
         validate: notEmpty: true
       data:
         type: Sequelize.TEXT
-        allowNull: false
-        validate: notEmpty: true
+        allowNull: true
