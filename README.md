@@ -31,7 +31,7 @@ store = new C3Store db, 'http_session_table',
     allowNull: true
 ```
 
-The [Express 3.x example app](https://github.com/dgf/c3store/master/example/express3/app.coffee)
+The [Express 3.x example app](https://github.com/dgf/c3store/blob/master/example/express3/app.coffee)
 shows a complete setup to get started.
 
 ## Development
