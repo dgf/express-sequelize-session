@@ -27,10 +27,12 @@
     , "coffee-coverage": "0.4.x"
     , "coffeelint": "1.5.x"
     , "connect": "2.19.x"
+    , "express": "3.4.x"
     , "mocha": "1.20.x"
     , "mysql": "2.3.x"
     , "pg": "2.0.x"
     , "sqlite3": "2.2.x"
+    , "supertest": "0.13.x"
   }
 
   , "engines": {
@@ -40,6 +42,7 @@
   , "scripts": {
     "pretest": "cake lint"
     , "prepublish": "cake build"
+    , "start": "node example/express3/server.js"
     , "test": "cake spec"
   }
 }

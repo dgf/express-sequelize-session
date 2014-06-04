@@ -4,7 +4,7 @@
 
 ## Usage
 
-typical usage scenario with express 3.x
+typical usage scenario with Express 3.x
 
 ```coffeescript
 # load and init express app
@@ -22,7 +22,7 @@ app.use express.session
   store: new C3Store sequelize
 ```
 
-change table name and define additional attributes
+change the table name or define additional attributes
 
 ```coffeescript
 store = new C3Store db, 'http_session_table',
@@ -30,6 +30,9 @@ store = new C3Store db, 'http_session_table',
     type: Sequelize.STRING
     allowNull: true
 ```
+
+The [Express 3.x example app](https://github.com/dgf/c3store/master/example/express3/app.coffee)
+shows a complete setup to get started.
 
 ## Development
 
