@@ -1,5 +1,6 @@
-spec = require './store.spec.template'
-MemStore = require('./in-memory-store') require('connect')
+connect = require 'connect'
+spec = require './store.spec.template.coffee'
+MemStore = require('./in-memory-store') connect.session.Store
 
 describe 'in memory session store implementation', ->
   spec (sessions) ->

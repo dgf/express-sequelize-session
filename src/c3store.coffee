@@ -1,62 +1,59 @@
+_ = require 'lodash'
 Sequelize = require 'sequelize'
-crudl = require 'crudl-model'
-_ = require 'underscore'
 
-SessionModel =
-  sid:
-    type: Sequelize.STRING
-    allowNull: false
-    unique: true
-    validate: notEmpty: true
-  data:
-    type: Sequelize.TEXT
-    allowNull: false
-    validate: notEmpty: true
+module.exports = (Store) ->
 
-# connect middleware session implementation
-class C3Store
+  # error wrapper
+  checkError = (callback) -> (error) -> if error? then callback? error else callback?()
 
-  constructor: (@SequelizeSession) ->
-    @Session = crudl @SequelizeSession
+  # connect middleware session implementation
+  class C3Store extends Store
 
-  clear: (callback) ->
-    success = -> callback?()
-    error = (error) -> callback? error
-    @Session.clear success, error
+    constructor: (@Session) ->
 
-  destroy: (sid, callback) ->
-    success = -> callback?()
-    error = (error) -> callback? error
-    q = where: sid: sid
-    @Session.destroy q, success, error
+    clear: (callback) ->
+      @Session.sync(force: true).done checkError callback
 
-  length: (callback) ->
-    success = (count) -> callback? count
-    error = (error) -> callback? null
-    @Session.count success, error
+    destroy: (sid, callback) ->
+      @Session.destroy(sid: sid).done checkError callback
 
-  get: (sid, callback) ->
-    success = (session) ->
-      if session
-        callback? null, JSON.parse session.data
-      else
-        callback?()
-    error = (error) -> callback? error
+    length: (callback) ->
+      @Session.count().done (error, count) ->
+        if error? then callback? error else
+          callback? count
 
-    q = where: sid: sid
-    @Session.find q, success, error
+    get: (sid, callback) ->
+      options =
+        where: sid: sid
+        attributes: ['data']
+      @Session.find(options).done (error, session) ->
+        if error?
+          callback? error
+        else if session
+          callback? null, JSON.parse session.data
+        else
+          callback?()
 
-  set: (sid, session, callback) ->
-    success = (data) -> callback?()
-    error = (error) -> callback? error
+    set: (sid, session, callback) ->
+      q = sid: sid
+      d = data: JSON.stringify session
+      @Session.findOrCreate(q, d).done (error, s) ->
+        if error?
+          callback? error
+        else if s.data isnt d.data
+          s.updateAttributes(d).done checkError callback
+        else
+          callback?()
 
-    s = sid: sid, data: JSON.stringify session
-    q = where: sid: sid
-    @Session.persist q, s, success, error
-
-module.exports = (connect) ->
-#
-  C3Store:: __proto__ = connect.session.Store.prototype
-
-  (sequelize, model) -> new C3Store sequelize.define 'Session',
-    _.extend(SessionModel, model)
+  # return factory method
+  (sequelize, name = 'Session', model = {}) ->
+    new C3Store sequelize.define name, _.extend model,
+      sid:
+        type: Sequelize.STRING
+        allowNull: false
+        unique: true
+        validate: notEmpty: true
+      data:
+        type: Sequelize.TEXT
+        allowNull: false
+        validate: notEmpty: true

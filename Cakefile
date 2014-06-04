@@ -1,6 +1,7 @@
 {print} = require 'util'
 {spawn} = require 'child_process'
-jasmineBinary = './node_modules/jasmine-node/bin/jasmine-node'
+mocha = './node_modules/mocha/bin/mocha'
+lint = './node_modules/coffeelint/bin/coffeelint'
 
 # ANSI Terminal Colors
 green = '\x1b[32m'
@@ -17,10 +18,14 @@ call = (name, options, callback) ->
 
 build = (callback) -> call 'coffee', ['-c', '-o', 'lib', 'src'], callback
 
-spec = (callback) -> call jasmineBinary, ['spec', '--verbose', '--coffee'], callback
+spec = (callback) -> call mocha, ['test/*.spec.coffee'], callback
+
+clint = (callback) -> call lint, ['-f', 'coffeelint.opts', './src', './test', 'Cakefile'], callback
 
 logSuccess = (status) -> log ":)", green if status is 0
 
 task 'build', 'build coffee', -> build logSuccess
+
+task 'lint', 'run coffee lint', -> clint logSuccess
 
 task 'spec', 'run specifications', -> spec logSuccess
