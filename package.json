@@ -1,9 +1,9 @@
 {
-    "name": "c3store"
+  "name": "c3store"
   , "version": "0.2.0"
   , "author": "Danny Gräf <github@dagnu.de>"
 
-  , "keywords": ["session", "store", "SQL"]
+  , "keywords": ["connect", "sequelize", "session", "store", "SQL", "postgres", "mysql", "sqlite"]
   , "description": "connect Sequelize session store"
   , "main": "lib/c3store.js"
 
@@ -12,18 +12,19 @@
     , "url": "http://github.com/dgf/c3store/raw/master/LICENSE"
   }]
   , "repository": {
-      "type": "git"
+    "type": "git"
     , "url": "git://github.com/dgf/c3store.git"
   }
 
   , "dependencies": {
-      "coffee-script": "1.7.x"
+    "coffee-script": "1.7.x"
     , "lodash": "2.4.x"
     , "sequelize": "1.7.x"
   }
   , "devDependencies": {
-      "async": "0.9.x"
+    "async": "0.9.x"
     , "chai": "1.9.x"
+    , "coffee-coverage": "0.4.x"
     , "coffeelint": "1.5.x"
     , "connect": "2.19.x"
     , "mocha": "1.20.x"
@@ -33,11 +34,11 @@
   }
 
   , "engines": {
-      "node": "0.10.x"
+    "node": "0.10.x"
   }
 
   , "scripts": {
-      "pretest": "cake lint"
+    "pretest": "cake lint"
     , "prepublish": "cake build"
     , "test": "cake spec"
   }

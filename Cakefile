@@ -1,7 +1,9 @@
+fs = require 'fs'
 {print} = require 'util'
 {spawn} = require 'child_process'
 mocha = './node_modules/mocha/bin/mocha'
 lint = './node_modules/coffeelint/bin/coffeelint'
+files = ['Cakefile', 'coffeelint.opts', 'coverage.js', 'package.json', './src', './test', './example']
 
 # ANSI Terminal Colors
 green = '\x1b[32m'
@@ -16,16 +18,30 @@ call = (name, options, callback) ->
   proc.stderr.on 'data', (data) -> log data.toString(), red
   proc.on 'exit', callback
 
+# calls a process and redirects the stdout in to a file
+callOUT = (file) -> (cmd, options, done) ->
+  logFile = fs.openSync file, 'w+', '660'
+  proc = spawn cmd, options.split(' '), stdio: ['ignore', logFile]
+  proc.stderr.on 'data', (data) -> print data.toString()
+  proc.on 'exit', (code, signal) ->
+    fs.closeSync logFile
+    done code, signal
+
 build = (callback) -> call 'coffee', ['-c', '-o', 'lib', 'src'], callback
 
 spec = (callback) -> call mocha, ['test/*.spec.coffee'], callback
 
-clint = (callback) -> call lint, ['-f', 'coffeelint.opts', './src', './test', 'Cakefile'], callback
+clint = (callback) -> call lint, ['-f', 'coffeelint.opts'].concat(files), callback
+
+coverage = (callback) ->
+  callOUT('coverage.html') mocha, '--require coverage.js --reporter html-cov test/*.spec.coffee', callback
 
 logSuccess = (status) -> log ":)", green if status is 0
 
 task 'build', 'build coffee', -> build logSuccess
 
-task 'lint', 'run coffee lint', -> clint logSuccess
+task 'coverage', 'run coverage', -> coverage logSuccess
+
+task 'lint', 'run lint', -> clint logSuccess
 
 task 'spec', 'run specifications', -> spec logSuccess

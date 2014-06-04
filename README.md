@@ -18,7 +18,7 @@ sequelize = new Sequelize 'db.name', 'db.user', 'db.pass'
 # load and create session store
 C3Store = require('c3store') express.session.Store
 app.use express.session
-  secret: "MyAwesomeAppSessionSecret",
+  secret: 'MyAwesomeAppSessionSecret'
   store: new C3Store sequelize
 ```
 
@@ -33,10 +33,14 @@ store = new C3Store db, 'http_session_table',
 
 ## Development
 
-lint, build and test it
+build and test it
 
 ```sh
-cake lint
-cake build
-cake spec
+c3store git:(master) ✗ cake
+Cakefile defines the following tasks:
+
+cake build                # build coffee
+cake coverage             # run coverage
+cake lint                 # run lint
+cake spec                 # run specifications
 ```
