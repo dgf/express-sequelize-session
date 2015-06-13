@@ -21,14 +21,14 @@ module.exports = (createStore) ->
 
   it 'returns nothing for unknown sid', (done) ->
     store.get 'sid3', (error, session) ->
-      expect(error).to.be.undefined
-      expect(session).to.be.undefined
+      expect(error).to.be.null
+      expect(session).to.be.null
       done()
 
   it 'defines set(sid, session, callback)', (done) ->
     session = data: key: 'third session'
     store.set 'sid2', session, (error) ->
-      expect(error).to.be.undefined
+      expect(error).to.be.null
       store.get 'sid2', (error, actual) ->
         expect(error).to.be.null
         expect(actual.data.key).to.equal session.data.key, 'third session'
@@ -37,7 +37,7 @@ module.exports = (createStore) ->
   it 'set(sid, session, callback) can be called twice', (done) ->
     session = data: key: 'updated third session'
     store.set 'sid2', session, (error) ->
-      expect(error).to.be.undefined
+      expect(error).to.be.null
       store.get 'sid2', (error, actual) ->
         expect(error).to.be.null
         expect(actual.data).to.deep.equal session.data, 'updated session'
@@ -50,15 +50,15 @@ module.exports = (createStore) ->
 
   it 'defines destroy(sid, callback)', (done) ->
     store.destroy 'sid1', (error) ->
-      expect(error).to.be.undefined
+      expect(error).to.be.null
       done()
 
   it 'not destroys unknown sessions', (done) ->
     store.destroy 'sid3', (error) ->
-      expect(error).to.be.undefined
+      expect(error).to.be.null
       done()
 
   it 'defines clear(callback)', (done) ->
     store.clear (error) ->
-      expect(error).to.be.undefined
+      expect(error).to.be.null
       done()

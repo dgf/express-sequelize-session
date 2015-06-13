@@ -2,10 +2,11 @@ language: node_js
 
 node_js:
   - "0.10"
+  - "0.12"
 
 addons:
   postgresql: "9.3"
 
 before_script:
-  - mysql -e 'create database c3s_test;'
-  - psql -c 'create database c3s_test;' -U postgres
+  - mysql -e 'create database e4s_test_mysql;'
+  - psql -c 'create database e4s_test_postgres;' -U postgres

@@ -1,48 +1,53 @@
 {
-  "name": "c3store"
-  , "version": "0.2.0"
-  , "author": "Danny Gräf <github@dagnu.de>"
-
-  , "keywords": ["connect", "sequelize", "session", "store", "SQL", "postgres", "mysql", "sqlite"]
-  , "description": "connect Sequelize session store"
-  , "main": "lib/c3store.js"
-
-  , "licenses": [{
-      "type": "MIT"
-    , "url": "http://github.com/dgf/c3store/raw/master/LICENSE"
-  }]
-  , "repository": {
-    "type": "git"
-    , "url": "git://github.com/dgf/c3store.git"
-  }
-
-  , "dependencies": {
-    "coffee-script": "1.7.x"
-    , "lodash": "2.4.x"
-    , "sequelize": "1.7.x"
-  }
-  , "devDependencies": {
-    "async": "0.9.x"
-    , "chai": "1.9.x"
-    , "coffee-coverage": "0.4.x"
-    , "coffeelint": "1.5.x"
-    , "connect": "2.19.x"
-    , "express": "3.4.x"
-    , "mocha": "1.20.x"
-    , "mysql": "2.3.x"
-    , "pg": "2.0.x"
-    , "sqlite3": "2.2.x"
-    , "supertest": "0.13.x"
-  }
-
-  , "engines": {
-    "node": "0.10.x"
-  }
-
-  , "scripts": {
-    "pretest": "cake lint"
-    , "prepublish": "cake build"
-    , "start": "node example/express3/server.js"
-    , "test": "cake spec"
+  "name": "e4store",
+  "version": "0.3.0",
+  "author": "Danny Gräf <github@dagnu.de>",
+  "keywords": [
+    "express",
+    "sequelize",
+    "session",
+    "store",
+    "SQL",
+    "postgres",
+    "mysql",
+    "sqlite"
+  ],
+  "description": "Express Sequelize session store",
+  "main": "lib/e4store.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/dgf/e4store/raw/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dgf/e4store.git"
+  },
+  "dependencies": {
+    "lodash": "^3.9.3",
+    "sequelize": "^3.2.0"
+  },
+  "devDependencies": {
+    "async": "^1.2.1",
+    "chai": "^3.0.0",
+    "coffee-coverage": "^0.6.0",
+    "coffee-script": "^1.9.3",
+    "coffeelint": "^1.10.1",
+    "express-session": "^1.11.3",
+    "mocha": "^2.2.5",
+    "mysql": "^2.7.0",
+    "pg": "^4.4.0",
+    "pg-hstore": "^2.3.2",
+    "sqlite3": "^3.0.8",
+    "supertest": "^1.0.1"
+  },
+  "engines": {
+    "node": "=>0.10.0"
+  },
+  "scripts": {
+    "pretest": "cake lint",
+    "prepublish": "cake build",
+    "test": "cake spec"
   }
 }

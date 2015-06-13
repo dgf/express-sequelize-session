@@ -18,14 +18,14 @@ module.exports = (Store) ->
     clear: (callback) ->
       if @sessions?
         @sessions = []
-        callback?()
+        callback? null, null
       else
         callback? 'clear call failed'
 
     destroy: (sid, callback) ->
       ifSidMatches sid, callback, =>
         if @getBySid(sid)? then delete @sessions[@getSidPosition sid]
-        callback?()
+        callback? null, null
 
     length: (callback) ->
       if @sessions? then callback @sessions.length else callback null
@@ -36,7 +36,7 @@ module.exports = (Store) ->
         if session?
           callback null, session # return data
         else
-          callback()
+          callback null, null
 
     set: (sid, session, callback) ->
       ifSidMatches sid, callback, =>
@@ -45,4 +45,4 @@ module.exports = (Store) ->
           @sessions[pos] = session
         else
           @sessions.push session
-        callback?()
+        callback? null, null

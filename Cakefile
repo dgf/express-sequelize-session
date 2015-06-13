@@ -3,7 +3,7 @@ fs = require 'fs'
 {spawn} = require 'child_process'
 mocha = './node_modules/mocha/bin/mocha'
 lint = './node_modules/coffeelint/bin/coffeelint'
-files = ['Cakefile', 'coffeelint.opts', 'coverage.js', 'package.json', './src', './test', './example']
+files = 'Cakefile coffeelint.opts coverage.js package.json ./src ./test'
 
 # ANSI Terminal Colors
 green = '\x1b[32m'
@@ -13,7 +13,7 @@ red = '\x1b[31m'
 log = (message, color) -> console.log color + message + reset
 
 call = (name, options, callback) ->
-  proc = spawn name, options
+  proc = spawn name, options.split(' ')
   proc.stdout.on 'data', (data) -> print data.toString()
   proc.stderr.on 'data', (data) -> log data.toString(), red
   proc.on 'exit', callback
@@ -27,11 +27,11 @@ callOUT = (file) -> (cmd, options, done) ->
     fs.closeSync logFile
     done code, signal
 
-build = (callback) -> call 'coffee', ['-c', '-o', 'lib', 'src'], callback
+build = (callback) -> call 'coffee', '-c -o lib src', callback
 
-spec = (callback) -> call mocha, ['test/*.spec.coffee'], callback
+spec = (callback) -> call mocha, 'test/*.spec.coffee', callback
 
-clint = (callback) -> call lint, ['-f', 'coffeelint.opts'].concat(files), callback
+clint = (callback) -> call lint, '-f coffeelint.opts ' + files, callback
 
 coverage = (callback) ->
   callOUT('coverage.html') mocha, '--require coverage.js --reporter html-cov test/*.spec.coffee', callback
