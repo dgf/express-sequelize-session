@@ -1,5 +1,4 @@
 fs = require 'fs'
-{print} = require 'util'
 {spawn} = require 'child_process'
 mocha = './node_modules/mocha/bin/mocha'
 lint = './node_modules/coffeelint/bin/coffeelint'
@@ -14,15 +13,19 @@ log = (message, color) -> console.log color + message + reset
 
 call = (name, options, callback) ->
   proc = spawn name, options.split(' ')
-  proc.stdout.on 'data', (data) -> print data.toString()
-  proc.stderr.on 'data', (data) -> log data.toString(), red
+  proc.stdout.on 'data', (data) ->
+    str = data.toString()
+    str = str.substr(0, str.length - 1)
+    if str.length > 0 then console.log str
+  proc.stderr.on 'data', (data) ->
+    log data.toString(), red
   proc.on 'exit', callback
 
 # calls a process and redirects the stdout in to a file
 callOUT = (file) -> (cmd, options, done) ->
   logFile = fs.openSync file, 'w+', '660'
   proc = spawn cmd, options.split(' '), stdio: ['ignore', logFile]
-  proc.stderr.on 'data', (data) -> print data.toString()
+  proc.stderr.on 'data', (data) -> console.log data.toString()
   proc.on 'exit', (code, signal) ->
     fs.closeSync logFile
     done code, signal
