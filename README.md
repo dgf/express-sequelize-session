@@ -1,6 +1,6 @@
 # Express Sequelize session store
 
-[![Build Status](https://travis-ci.org/dgf/e4store.png)](https://travis-ci.org/dgf/e4store/)
+[![Build Status](https://travis-ci.org/dgf/express-sequelize-session.png)](https://travis-ci.org/dgf/express-sequelize-session/)
 
 ## Usage
 
@@ -17,14 +17,14 @@
     sequelize = new Sequelize 'db.name', 'db.user', 'db.pass'
 
     # load and create session store
-    E4Store = require('e4store') express.session.Store
+    Store = require('express-sequelize-session') express.session.Store
     app.use express.session
       key: 'sid'
       secret: 'MyAwesomeAppSessionSecret'
-      store: new E4Store sequelize
+      store: new Store sequelize
 ```
 
-The [Express 3.x sample application](https://github.com/dgf/e4store-express3-itest/blob/master/src/app.coffee)
+The [Express 3.x sample application](https://github.com/dgf/express3-sequelize-session-itest/blob/master/src/app.coffee)
 shows a complete setup to get started.
 
 ### Express 4.x
@@ -41,16 +41,16 @@ shows a complete setup to get started.
     sequelize = new Sequelize 'db.name', 'db.user', 'db.pass'
 
     # load and create session store
-    E4Store = require('e4store') expressSession.Store
+    Store = require('express-sequelize-session') expressSession.Store
     app.use expressSession
       name: 'sid'
       secret: 'MyAwesomeAppSessionSecret'
-      store: new E4Store sequelize
+      store: new Store sequelize
       resave: false
       saveUninitialized: true
 ```
 
-The [Express 4.x sample application](https://github.com/dgf/e4store-express4-itest/blob/master/src/app.coffee)
+The [Express 4.x sample application](https://github.com/dgf/express4-sequelize-session-itest/blob/master/src/app.coffee)
 shows a complete setup to get started.
 
 ### Custom Schema
@@ -59,7 +59,7 @@ use individual table name with optional string column
 
 ```coffeescript
 
-    store = new E4Store sequelize, 'http_session_table',
+    store = new Store sequelize, 'http_session_table',
       optional:
         type: Sequelize.STRING
         allowNull: true
@@ -89,7 +89,7 @@ build and test it
 
 ```sh
 
-    e4store git:(master) ✗ cake
+    express-sequelize-session git:(master) ✗ cake
     Cakefile defines the following tasks:
 
     cake build                # build coffee

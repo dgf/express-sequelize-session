@@ -1,5 +1,5 @@
 {
-  "name": "e4store",
+  "name": "express-sequelize-session",
   "version": "0.3.0",
   "description": "Express Sequelize session store",
   "keywords": [
@@ -20,7 +20,7 @@
     "LICENSE"
   ],
   "main": "lib/e4store.js",
-  "repository": "dgf/e4store.git",
+  "repository": "dgf/express-sequelize-session.git",
   "scripts": {
     "pretest": "cake lint",
     "prepublish": "cake build",

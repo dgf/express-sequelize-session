@@ -3,14 +3,14 @@ async = require 'async'
 expressSession = require 'express-session'
 Sequelize = require 'sequelize'
 
-E4Store = require('../src/e4store') expressSession.Store
+Store = require('../src/e4store') expressSession.Store
 spec = require './store.spec.template.coffee'
 
 sqlSpec = (db) ->
 
   describe 'Express Sequelize session store', ->
 
-    store = new E4Store db, 'test_session_table',
+    store = new Store db, 'test_session_table',
       optional:
         type: Sequelize.STRING
         allowNull: true
