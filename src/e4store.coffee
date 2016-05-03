@@ -40,6 +40,7 @@ module.exports = (Store) ->
           callback? null, JSON.parse session.data
         else # not found
           callback? null, null
+        return null
       .catch (err) ->
         callback? err, null
 
